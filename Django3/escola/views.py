@@ -8,10 +8,11 @@ class AlunosViewSet(viewsets.ModelViewSet):
     """Exibindo todos os alunos e alunas"""
     queryset = Aluno.objects.all()
     def get_serializer_class(self):
-        if self.request.version ==  'v2':
+        if self.request.version == 'v2':
             return AlunoSerializerV2
         else:
             return AlunoSerializer
+
 class CursosViewSet(viewsets.ModelViewSet):
     """Exibindo todos os cursos"""
     queryset = Curso.objects.all()
@@ -21,7 +22,7 @@ class CursosViewSet(viewsets.ModelViewSet):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            response = Response(serializer.data,status=status.HTTP_201_CREATED)
+            response = Response(serializer.data, status=status.HTTP_201_CREATED)
             id = str(serializer.data['id'])
             response['Location'] = request.build_absolute_uri() + id
             return response
@@ -30,7 +31,7 @@ class MatriculaViewSet(viewsets.ModelViewSet):
     """Listando todas as matrículas"""
     queryset = Matricula.objects.all()
     serializer_class = MatriculaSerializer
-    http_method_names =['get', 'post', 'put']
+    http_method_names = ['get', 'post', 'put', 'path']
 
 class ListaMatriculasAluno(generics.ListAPIView):
     """Listando as matrículas de um aluno ou aluna"""
